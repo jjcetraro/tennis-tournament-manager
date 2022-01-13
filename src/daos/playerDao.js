@@ -1,5 +1,5 @@
 import Player from '../entities/Player'
-import { collection, getDocs, addDoc } from 'firebase/firestore'
+import { collection, doc, getDocs, addDoc, deleteDoc } from 'firebase/firestore'
 import db from '../firebase/firebaseConfig'
 
 export default function playerDao(){
@@ -35,8 +35,12 @@ export default function playerDao(){
             pts: player.getPts()
         })
     }
+
+    async function deletePlayer(playerId) {
+        await deleteDoc(doc(db, PLAYERS_COLLECTION_NAME, playerId))
+    }
     
     return Object.freeze({ 
-      getPlayers, addPlayer
+      getPlayers, addPlayer, deletePlayer
     });
  }

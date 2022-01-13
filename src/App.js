@@ -8,6 +8,7 @@ import AddPlayerPage from './pages/AddPlayerPage'
 import EditMatchdayPage from './pages/EditMatchdayPage'
 import MatchdayPage from './pages/MatchdayPage'
 import MatchdaysPage from './pages/MatchdaysPage'
+import PlayerPage from './pages/PlayerPage'
 import PlayersPage from './pages/PlayersPage'
 import PositionsPage from './pages/PositionsPage'
 
@@ -24,6 +25,7 @@ function App() {
           <Route path='/' element={<Navigate to="/matchdays"/>}/>
           <Route path='/matchday/:id' element={<MatchdayPage/>}/>
           <Route path='/matchdays' element={<MatchdaysPage/>}/>
+          <Route path='/player/:id' element={<PlayerPage/>}/>
           <Route path='/players' element={<PlayersPage/>}/>
           <Route path='/positions' element={<PositionsPage/>}/>
           <Route path='*' element={<NotFoundPage/>}/>

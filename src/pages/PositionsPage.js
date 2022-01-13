@@ -34,7 +34,7 @@ export default function PositionsPage() {
                     {
                         players.map((player, index) => {
                             return (
-                                <tr>
+                                <tr key={player.getId()}>
                                     <td>{index+1}</td>
                                     <td>{player.getName()}</td>
                                     <td>{player.getW()}</td>
