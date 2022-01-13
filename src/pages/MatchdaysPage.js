@@ -9,7 +9,7 @@ export default function MatchdaysPage() {
 
     return (
         <>
-            <h1>Matchdays</h1>
+            <h1>Jornadas</h1>
             <Button onClick={handleClickMatchday}>Jornada</Button>
             <Button onClick={handleClickEditMatchday}>Editar Jornada</Button>
             <Row>

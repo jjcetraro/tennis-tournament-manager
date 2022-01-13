@@ -1,6 +1,20 @@
+import { useState, useEffect } from "react"
 import { Table } from "react-bootstrap"
+import playerDaoCreator from "../daos/playerDao"
 
 export default function PositionsPage() {
+
+    const [players, setPlayers] = useState([])
+
+    useEffect(() => {
+        const obtenerDatos = async () => {
+            const playerDao = playerDaoCreator()
+            setPlayers(await playerDao.getPlayers())
+        }
+        obtenerDatos()
+
+    }, [])
+
     return (
         <>
             <h1>Tabla de Posiciones</h1>
@@ -15,34 +29,19 @@ export default function PositionsPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Darío Jomer</td>
-                        <td>5</td>
-                        <td>2</td>
-                        <td>12</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Camila Isola</td>
-                        <td>4</td>
-                        <td>3</td>
-                        <td>11</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Andrés González</td>
-                        <td>2</td>
-                        <td>5</td>
-                        <td>9</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Bernardo Huerta</td>
-                        <td>1</td>
-                        <td>6</td>
-                        <td>8</td>
-                    </tr>
+                    {
+                        players.map((player, index) => {
+                            return (
+                                <tr>
+                                    <td>{index+1}</td>
+                                    <td>{player.getName()}</td>
+                                    <td>{player.getW()}</td>
+                                    <td>{player.getL()}</td>
+                                    <td>{player.getPts()}</td>
+                                </tr>
+                            )
+                        })
+                    }
                 </tbody>
             </Table>
         </>

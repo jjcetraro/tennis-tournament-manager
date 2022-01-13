@@ -44,7 +44,10 @@ export default function PositionsPage() {
                 null,
                 formData.name,
                 formData.gender === 'male', 
-                formData.birthdate
+                formData.birthdate,
+                0,
+                0,
+                0
             )
         )
         navigate('/players')

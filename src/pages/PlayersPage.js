@@ -8,18 +8,10 @@ export default function PlayersPage() {
     const [players, setPlayers] = useState([])
 
     useEffect(() => {
-
-
         const obtenerDatos = async () => {
-            /*const datos = await getDocs(collection(db, 'player'))
-            datos.forEach(documento => {
-                console.log(documento.data())
-            })*/
-
             const playerDao = playerDaoCreator()
             setPlayers(await playerDao.getPlayers())
         }
-
         obtenerDatos()
 
     }, [])
@@ -30,7 +22,7 @@ export default function PlayersPage() {
 
     return (
         <>
-            <h1>Players</h1>
+            <h1>Jugadores</h1>
             <Row>
                 <Col className="text-center">
                     <Button onClick={handleClickAddPlayer}>Agregar Jugador</Button>

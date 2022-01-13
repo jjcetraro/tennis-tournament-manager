@@ -10,7 +10,17 @@ export default function playerDao(){
         const datos = await getDocs(collection(db, PLAYERS_COLLECTION_NAME))
         const result = []
         datos.forEach(doc => {
-            result.push(new Player(doc.id, doc.data().name, doc.data().isMale, doc.data().birthdate))
+            result.push(
+                new Player(
+                    doc.id,
+                    doc.data().name,
+                    doc.data().isMale,
+                    doc.data().birthdate,
+                    doc.data().w,
+                    doc.data().l,
+                    doc.data().pts
+                )
+            )
         })
         return result
     }
@@ -19,7 +29,10 @@ export default function playerDao(){
         await addDoc(collection(db, PLAYERS_COLLECTION_NAME), {
             name: player.getName(),
             birthdate: player.getBirthdate(),
-            isMale: player.isMale()
+            isMale: player.isMale(),
+            w: player.getW(),
+            l: player.getL(),
+            pts: player.getPts()
         })
     }
     
