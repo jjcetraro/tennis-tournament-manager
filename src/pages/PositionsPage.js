@@ -9,7 +9,9 @@ export default function PositionsPage() {
     useEffect(() => {
         const obtenerDatos = async () => {
             const playerDao = playerDaoCreator()
-            setPlayers(await playerDao.getPlayers())
+            let arrayPlayers = await playerDao.getPlayers()
+            arrayPlayers.sort((player1, player2) => player2.getPts() - player1.getPts());
+            setPlayers(arrayPlayers)
         }
         obtenerDatos()
 
