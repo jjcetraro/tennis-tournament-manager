@@ -10,7 +10,9 @@ export default function PlayersPage() {
     useEffect(() => {
         const obtenerDatos = async () => {
             const playerDao = playerDaoCreator()
-            setPlayers(await playerDao.getPlayers())
+            let arrayPlayers = await playerDao.getPlayers()
+            arrayPlayers.sort((player1, player2) => player1.getName().localeCompare(player2.getName()));
+            setPlayers(arrayPlayers)
         }
         obtenerDatos()
 
