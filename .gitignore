@@ -26,3 +26,7 @@ yarn-error.log*
 firebase.json
 .firebase
 .firebaserc
+.env.local.annual-doubles
+.env.local.domingueros
+.firebaserc.annual-doubles
+.firebaserc.domingueros
