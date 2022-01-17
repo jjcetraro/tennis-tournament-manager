@@ -24,6 +24,14 @@ export default class Player {
     getPts = () => this._pts
 
     getAge = () => {
-        return 0
+        const today = new Date();
+        const dateBirthdate = new Date(this.getBirthdate());
+        let age = today.getFullYear() - dateBirthdate.getFullYear();
+        const m = today.getMonth() - dateBirthdate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < dateBirthdate.getDate())) {
+            age--;
+        }
+        return age;
     }
+
 }

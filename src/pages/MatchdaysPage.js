@@ -1,58 +1,55 @@
-import { Button, Card, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Button, Card, Row, Col, Spinner } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
+
+import matchdayDaoCreator from "../daos/matchdayDao"
 
 export default function MatchdaysPage() {
     const navigate = useNavigate();
 
-    const handleClickMatchday = () => navigate("/matchday/3")
-    const handleClickEditMatchday = () => navigate("/editMatchday/3")
+    const [matchdays, setMatchdays] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const obtenerDatos = async () => {
+            const matchdayDao = matchdayDaoCreator()
+            const arrayMatchdays = await matchdayDao.getMatchdays()
+            setMatchdays(arrayMatchdays)
+            setLoading(false)
+        }
+        obtenerDatos()
+    }, [])
 
     return (
         <>
             <h1>Jornadas</h1>
-            <Button onClick={handleClickMatchday}>Jornada</Button>
-            <Button onClick={handleClickEditMatchday}>Editar Jornada</Button>
             <Row>
-                <Col xs={12} md={4}>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Jornada 4</Card.Title>
-                            <Card.Text>Cancha: -</Card.Text>
-                            <Card.Text>-</Card.Text>
-                            <Card.Text>-</Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col xs={12} md={4}>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Jornada 3</Card.Title>
-                            <Card.Text>Cancha: La Academia MG</Card.Text>
-                            <Card.Text>2 partidos</Card.Text>
-                            <Card.Text>15 de marzo de 2021</Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col xs={12} md={4}>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Jornada 2</Card.Title>
-                            <Card.Text>Cancha: La Academia MG</Card.Text>
-                            <Card.Text>2 partidos</Card.Text>
-                            <Card.Text>8 de marzo de 2021</Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col xs={12} md={4}>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Jornada 1</Card.Title>
-                            <Card.Text>Cancha: La Academia MG</Card.Text>
-                            <Card.Text>2 partidos</Card.Text>
-                            <Card.Text>1 de marzo de 2021</Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
+                {
+                    loading
+                    ?
+                    <Col xs={12} className="text-center mt-5">
+                        <Spinner animation="border" role="status" variant="primary">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    </Col>
+                    :
+                    matchdays.map(matchday => {
+                        return (
+                            <Col xs={12} md={4} key={matchday.getId()}>
+                                <Link to={`/matchday/${matchday.getId()}`} style={{textDecoration: 'none'}}>
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title>{matchday.getTitle()}</Card.Title>
+                                            <Card.Text>{`Cancha: ${matchday.getPlace()}`}</Card.Text>
+                                            <Card.Text>{`${matchday.getMatches().length} partidos`}</Card.Text>
+                                            <Card.Text>{matchday.getDate()}</Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                </Link>
+                            </Col>
+                        )
+                    })
+                }
             </Row>
         
         
