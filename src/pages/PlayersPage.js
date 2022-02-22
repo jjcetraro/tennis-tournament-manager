@@ -33,21 +33,22 @@ export default function PlayersPage() {
     const navigate = useNavigate()
 
     const handleClickAddPlayer = () => navigate("/addPlayer")
-
-
-    const handleClickRemovePlayerFromMatchday = async (event, playerId) => {
-        event.target.setAttribute('disabled', '');
-        const matchdayDao = matchdayDaoCreator()
-        await matchdayDao.removePlayerFromMatchday(openMatchdayId, playerId)
-        window.location.reload()
-            
-    }
     
-    const handleClickAddPlayerToMatchday = async (event, playerId) => {
-        event.target.setAttribute('disabled', '');
+    const handleClickAddRemovePlayerToMatchday = async (event, playerId) => {
+        event.target.setAttribute('disabled', '')
         const matchdayDao = matchdayDaoCreator()
-        await matchdayDao.addPlayerToMatchday(openMatchdayId, playerId)
-        window.location.reload()
+        if(event.target.classList.contains('btn-primary')){
+            await matchdayDao.addPlayerToMatchday(openMatchdayId, playerId)
+            event.target.innerText = 'Quitar de la Jornada'
+            event.target.classList.remove('btn-primary')
+            event.target.classList.add('btn-danger')
+        }else{
+            await matchdayDao.removePlayerFromMatchday(openMatchdayId, playerId)
+            event.target.innerText = 'Agregar a la Jornada'
+            event.target.classList.remove('btn-danger')
+            event.target.classList.add('btn-primary')
+        }
+        event.target.removeAttribute('disabled')
     }
 
 
@@ -88,9 +89,9 @@ export default function PlayersPage() {
                                                 (
                                                     playerIdsInOpenMatchday.includes(player.getId())
                                                     ?
-                                                    <Button variant="danger" onClick={event => handleClickRemovePlayerFromMatchday(event, player.getId())}>Quitar de la Jornada</Button>
+                                                    <Button variant="danger" onClick={event => handleClickAddRemovePlayerToMatchday(event, player.getId())}>Quitar de la Jornada</Button>
                                                     :
-                                                    <Button onClick={event => handleClickAddPlayerToMatchday(event, player.getId())}>Agregar a la Jornada</Button>
+                                                    <Button onClick={event => handleClickAddRemovePlayerToMatchday(event, player.getId())}>Agregar a la Jornada</Button>
                                                 )
                                                 :
                                                 <></>
